@@ -2,4 +2,14 @@
 
 {% block content %}
 	<h1>Hi, {{ user.username }}!</h1>
+
+	{% for facility in facilities %}
+		<tr>
+			<td>{{ facility.name }}</td>
+			<td>{{ facility.phone }}</td>
+			<td>{{ facility.address }}</td>
+			<td>{{ facility.current_capacity }}</td>
+			<td>{{ facility.max_capacity }}</td>
+		</tr>
+	{% endfor %}
 {% endblock %}

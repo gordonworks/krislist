@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1>Hi, {{ current_user.username }}!</h1>
+
+	<tr>
+		<td>{{ facility.name }}</td>
+		<td>{{ facility.phone }}</td>
+		<td>{{ facility.address }}</td>
+		<td>{{ facility.current_capacity }}</td>
+		<td>{{ facility.max_capacity }}</td>
+	</tr>
+
+	{% if current_user.id == facility.id %}
+		<h1>You are on your own page</h1>
+	{% endif %}
+{% endblock %}
