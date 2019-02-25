@@ -77,6 +77,9 @@ def edit(id):
 		if 'cancel_button' in request.form:
 			print('edit canceled')
 		else:
+			facility.username=form.username.data
+			facility.email=form.email.data
+			facility.name=form.name.data
 			facility.phone=form.phone.data
 			facility.address=form.address.data
 			db.session.commit()
