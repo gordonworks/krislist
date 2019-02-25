@@ -5,7 +5,9 @@
 
 	<table class="table">
 	{% for facility in facilities %}
-		{% if facility.current_capacity < facility.max_capacity %}
+		{% if not facility.current_capacity %}
+		<tr>
+		{% elif facility.current_capacity < facility.max_capacity %}
 		<tr style="background-color: lightgreen;">
 		{% else %}
 		<tr style="background-color: pink;">

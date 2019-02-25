@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+	<h1>Edit</h1>
+	<div class="row">
+		<form action="" method="post">
+			{{ form.hidden_tag() }}
+			{{ form.username(size=16,value=facility.username) }}<br>
+			{{ form.email(size=16,value=facility.email) }}<br>
+			{{ form.name(size=16,value=facility.name) }}<br>
+			{{ form.phone(size=16,value=facility.phone) }}<br>
+			{{ form.address(size=64,value=facility.address) }}<br>
+			{{ form.submit() }}
+			<input type = "submit" name="cancel_button" value="Cancel">
+		</form>
+	</div>
+{% endblock %}

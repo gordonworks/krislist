@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, CapacityForm
+from app.forms import LoginForm, RegistrationForm, CapacityForm, EditProfileForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import Facility
 from werkzeug.urls import url_parse
@@ -9,7 +9,7 @@ from datetime import datetime
 @app.route('/')
 @app.route('/index')
 def index():
-	facilities = Facility.query.all()
+	facilities = Facility.query.order_by((Facility.max_capacity - Facility.current_capacity).desc()).all()
 	return render_template('index.html', title='Home',facilities=facilities)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -61,3 +61,29 @@ def facility(id):
 def logout():
 	logout_user()
 	return redirect(url_for('index'))
+
+@app.route('/edit/<int:id>/',methods=['GET','POST'])
+@login_required
+def edit(id):
+	facility =  Facility.query.filter_by(id=id).first_or_404()
+	form = EditProfileForm()
+	
+	if 'save' in request.form:
+		print("save button hit")
+	
+	
+	#cancel button vs save button
+	if form.validate_on_submit():
+		if 'cancel_button' in request.form:
+			print('edit canceled')
+		else:
+			facility.phone=form.phone.data
+			facility.address=form.address.data
+			db.session.commit()
+		#ensures editing a transaction preserves the current page
+		next_page = request.args.get('next')
+		if not next_page or url_parse(next_page).netloc != '':
+				next_page = url_for('facility',id=current_user.id)
+		return redirect(next_page)
+	
+	return render_template('edit.html',form=form,title="Edit", facility=facility)

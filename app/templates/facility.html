@@ -1,38 +1,35 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-	<h1>Hi, {{ current_user.username }}!</h1>
-	<tr>
-		<td>{{ facility.name }}</td>
-		<td>{{ facility.phone }}</td>
-		<td>{{ facility.address }}</td>
-		<td>{{ facility.current_capacity }}</td>
-		<td>{{ facility.max_capacity }}</td>
-	</tr>
-
-	<h2>Current Capacity:{{ facility.current_capacity }}</h2>
-	<h2>Max Capacity:{{ facility.max_capacity }}</h2>
-	<h2>Last updated:{{ moment(facility.last_updated).calendar() }}</h2>
-
+	<div class="jumbotron jumbotron-fluid">
+		<div class="container">
+			<h1 class="display-4">{{ facility.name }}</h1>
+			<p class="lead">{{ facility.address }}    {{ facility.phone }}</p>
+		</div>
+	</div>
+	<h2>Current Capacity:{{ facility.current_capacity }}/{{ facility.max_capacity }}</h2>
+	<h3>Last updated:{{ moment(facility.last_updated).calendar() }}</h3>
 	{% if current_user.id == facility.id %}
-		<h1>You are on your own page</h1><br>
+		<hr>
+		<h4>Edit Capacity</h4><br>
 		<form action="" method="post" novalidate>
 		{{form.hidden_tag() }}
 		<p>
 			{{ form.current_capacity.label }}<br>
-			{{ form.current_capacity(size=6) }}<br>
+			{{ form.current_capacity(size=6,value=facility.current_capacity) }}<br>
 			{% for error in form.current_capacity.errors %}
 			<span style="color:red;">[{{ error}}]</span>
 			{% endfor %}
 		</p>
 		<p>
 			{{ form.max_capacity.label }}<br>
-			{{ form.max_capacity(size=6) }}<br>
+			{{ form.max_capacity(size=6,value=facility.max_capacity) }}<br>
 			{% for error in form.max_capacity.errors %}
 			<span style="color:red;">[{{ error}}]</span>
 			{% endfor %}
 		</p>
 		<p>{{ form.submit() }}</p>
 	</form>
+	<p><a href='{{ url_for("edit",id=facility.id,next=request.full_path) }}'>Edit Profile</a></p>
 	{% endif %}
 {% endblock %}
