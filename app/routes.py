@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, CapacityForm
 from flask_login import current_user, login_user, logout_user, login_required
 from app.models import Facility
 from werkzeug.urls import url_parse
@@ -9,7 +9,7 @@ from datetime import datetime
 @app.route('/')
 @app.route('/index')
 def index():
-	user = {'username':'nursejacky'}
+	user = {'username':''}
 	facilities = Facility.query.all()
 	return render_template('index.html', title='Home', user=user,facilities=facilities)
 
@@ -46,9 +46,16 @@ def register():
 	return render_template('register.html', title='Register', form=form)
 
 @app.route('/facility/<int:id>',methods=['GET','POST'])
-def facility():
+def facility(id):
 	facility = Facility.query.filter_by(id=id).first_or_404()
-	return render_template('facility.html', title='View Facility', facility=facility)
+	form = CapacityForm()
+	if form.validate_on_submit() and request.method == 'POST':
+		facility.current_capacity = form.current_capacity.data
+		facility.max_capacity = form.max_capacity.data
+		facility.last_updated = datetime.utcnow()
+		db.session.commit()
+	return render_template('facility.html', title='View Facility',
+	 facility=facility, form=form)
 
 @login_required
 @app.route('/logout')

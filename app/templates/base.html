@@ -9,6 +9,7 @@
 			{% if current_user.is_anonymous %}
 			<a href="{{ url_for('login') }}">Login</a>
 			{% else %}
+			<a href="{{ url_for('facility',id=current_user.id) }}">Your Facility</a>
 			<a href="{{ url_for('logout') }}">Logout</a>
 			{% endif %}
 		</div>
@@ -22,6 +23,10 @@
 		</ul>
 		{% endif %}
 		{% endwith %}
+
+
 	{% block content %}{% endblock %}
+
 		</body>
+
 </html

@@ -11,7 +11,28 @@
 		<td>{{ facility.max_capacity }}</td>
 	</tr>
 
+	<h2>Current Capacity:{{ facility.current_capacity }}</h2>
+	<h2>Max Capacity:{{ facility.max_capacity }}</h2>
+
 	{% if current_user.id == facility.id %}
-		<h1>You are on your own page</h1>
+		<h1>You are on your own page</h1><br>
+		<form action="" method="post" novalidate>
+		{{form.hidden_tag() }}
+		<p>
+			{{ form.current_capacity.label }}<br>
+			{{ form.current_capacity(size=6) }}<br>
+			{% for error in form.current_capacity.errors %}
+			<span style="color:red;">[{{ error}}]</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.max_capacity.label }}<br>
+			{{ form.max_capacity(size=6) }}<br>
+			{% for error in form.max_capacity.errors %}
+			<span style="color:red;">[{{ error}}]</span>
+			{% endfor %}
+		</p>
+		<p>{{ form.submit() }}</p>
+	</form>
 	{% endif %}
 {% endblock %}

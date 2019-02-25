@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField
 from wtforms.validators import DataRequired, ValidationError, Email, EqualTo
 from app.models import Facility
 
@@ -29,3 +29,14 @@ class RegistrationForm(FlaskForm):
 		facility = Facility.query.filter_by(email=email.data).first()
 		if facility is not None:
 			raise ValidationError('Please use a different email address.')
+
+	def validate_phone(self,phone):
+		if len(phone.data) < 10:
+			raise ValidationError('Invalid phone number')
+		#todo: regex validation of a type of phone number
+
+
+class CapacityForm(FlaskForm):
+	current_capacity=IntegerField('Current Capacity', validators=[DataRequired()])
+	max_capacity=IntegerField('Max Capacity', validators=[DataRequired()])
+	submit = SubmitField('Update')

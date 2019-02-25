@@ -3,13 +3,18 @@
 {% block content %}
 	<h1>Hi, {{ user.username }}!</h1>
 
+	<table>
 	{% for facility in facilities %}
+	
 		<tr>
-			<td>{{ facility.name }}</td>
+			<td><a href="{{ url_for('facility',id=facility.id) }}">{{ facility.name }}</a></td>
 			<td>{{ facility.phone }}</td>
 			<td>{{ facility.address }}</td>
 			<td>{{ facility.current_capacity }}</td>
 			<td>{{ facility.max_capacity }}</td>
+			<td>{{ facility.last_updated }}</td>
 		</tr>
 	{% endfor %}
+	</table>
+
 {% endblock %}
