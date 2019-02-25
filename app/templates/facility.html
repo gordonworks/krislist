@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block app_content %}
 	<h1>Hi, {{ current_user.username }}!</h1>
-
 	<tr>
 		<td>{{ facility.name }}</td>
 		<td>{{ facility.phone }}</td>
@@ -13,6 +12,7 @@
 
 	<h2>Current Capacity:{{ facility.current_capacity }}</h2>
 	<h2>Max Capacity:{{ facility.max_capacity }}</h2>
+	<h2>Last updated:{{ moment(facility.last_updated).calendar() }}</h2>
 
 	{% if current_user.id == facility.id %}
 		<h1>You are on your own page</h1><br>

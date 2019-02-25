@@ -1,18 +1,21 @@
 {% extends "base.html" %}
 
-{% block content %}
-	<h1>Hi, {{ user.username }}!</h1>
+{% block app_content %}
+	<h3>List of Facilities</h3>
 
-	<table>
+	<table class="table">
 	{% for facility in facilities %}
-	
-		<tr>
+		{% if facility.current_capacity < facility.max_capacity %}
+		<tr style="background-color: lightgreen;">
+		{% else %}
+		<tr style="background-color: pink;">
+		{% endif %}
 			<td><a href="{{ url_for('facility',id=facility.id) }}">{{ facility.name }}</a></td>
 			<td>{{ facility.phone }}</td>
 			<td>{{ facility.address }}</td>
 			<td>{{ facility.current_capacity }}</td>
 			<td>{{ facility.max_capacity }}</td>
-			<td>{{ facility.last_updated }}</td>
+			<td>{{ moment(facility.last_updated).fromNow() }}</td>
 		</tr>
 	{% endfor %}
 	</table>
