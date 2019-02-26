@@ -1,75 +1,17 @@
-Kris List
-1. create account
-	Nurse:username,email,password, address, phone number, nurse=1
-	MF: username,email,password,Name,address,Phone number, nurse=0
-2a. Nurse-> see list of hospitals, sorted by most open/closest to ER
-2b. Mental facility -> publish hospital to list, easily edit open beds
-3. Nurse can see mental facility and call
-....
-4. Nurse can book within site
 
 https://community.algolia.com/places/documentation.html
 
 
+Bugs:
 
-{% extends "base.html" %}
-
-{% block content %}
-	<h1>Register</h1>
-	<form action="" method="post">
-		{{form.hidden_tag() }}
-		<p>
-			{{ form.username.label }}<br>
-			{{ form.username(size=32) }}<br>
-			{% for error in form.username.errors %}
-			<span style="color:red;">[{{ error}}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			{{ form.email.label }}<br>
-			{{ form.email(size=64) }}<br>
-			{% for error in form.email.errors %}
-			<span style="color:red;">[{{ error}}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			{{ form.email.label }}<br>
-			{{ form.email(size=64) }}<br>
-			{% for error in form.email.errors %}
-			<span style="color:red;">[{{ error}}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			{{ form.password.label }}<br>
-			{{ form.password(size=32) }}<br>
-			{% for error in form.password.errors %}
-			<span style="color:red;">[{{ error}}]</span>
-			{% endfor %}
-		</p>
-		<p>
-			{{ form.password2.label }}<br>
-			{{ form.password2(size=32) }}<br>
-			{% for error in form.password2.errors %}
-			<span style="color:red;">[{{ error}}]</span>
-			{% endfor %}
-		</p>
-		<p>{{ form.submit() }}</p>
-	</form>
-{% endblock %}
+---------------
 
 
-
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmd6zcEg8Y8P_pEr-xm7t-GodKSl820iA&libraries=places"></script>
-	</head>
-	<body>
-		<label for="locationTextField">Location</label>
-		<input id="locationTextField" type="text" size="50">
-
-		<script>
-			function init() {
-				var input = document.getElementById('locationTextField');
-				var autocomplete = new google.maps.places.Autocomplete(input);
-			}
-
-			google.maps.event.addDomListener(window, 'load', init);
-		</script>
+Features to add:
+[]email reset support
+[]restructuring of app
+[]formatting of facilities
+	- bold for open, regular for full
+	- green for just updated within the hour, red for updated greater than a day
+[]Address to geolocation conversion ability to sort by closest facility
+[]better formatting of address,phone number input/output 

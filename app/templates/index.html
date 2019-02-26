@@ -4,6 +4,12 @@
 	<h3>List of Facilities</h3>
 
 	<table class="table">
+			<th>Name</th>
+			<th>Phone</th>
+			<th>Address</th>
+			<th>Current Capacity</th>
+			<th>Max Capacity</th>
+			<th>Last Updated</th>
 	{% for facility in facilities %}
 		{% if not facility.current_capacity %}
 		<tr>
